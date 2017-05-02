@@ -13,6 +13,7 @@
 package com.facebook.react.bridge;
 
 import javax.annotation.Nullable;
+import com.facebook.react.bridge.WritableNativeMap;
 
 public class PromiseImpl implements Promise {
 
@@ -67,6 +68,18 @@ public class PromiseImpl implements Promise {
       errorInfo.putString("code", code);
       errorInfo.putString("message", message);
       // TODO(8850038): add the stack trace info in, need to figure out way to serialize that
+      mReject.invoke(errorInfo);
+    }
+  }
+
+  @Override
+  public void reject(String code, WritableNativeMap errorInfo, @Nullable Throwable e) {
+    if (mReject != null) {
+      if (code == null) {
+        code = DEFAULT_ERROR;
+      }
+      errorInfo.putString("code", code);
+      errorInfo.putString("message", message);
       mReject.invoke(errorInfo);
     }
   }

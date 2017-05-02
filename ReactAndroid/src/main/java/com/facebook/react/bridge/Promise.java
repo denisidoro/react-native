@@ -10,6 +10,7 @@
 package com.facebook.react.bridge;
 
 import javax.annotation.Nullable;
+import com.facebook.react.bridge.WritableNativeMap;
 
 /**
  * Interface that represents a JavaScript Promise which can be passed to the native module as a
@@ -39,6 +40,11 @@ public interface Promise {
    * Report an exception with a custom error message.
    */
   void reject(String code, String message, Throwable e);
+
+  /**
+   * Report an exception with a custom error body.
+   */
+  void reject(String code, WritableNativeMap errorInfo, Throwable e);
 
   /**
    * Report an error which wasn't caused by an exception.
